@@ -60,6 +60,6 @@ public class MemoryCacheManager : ICacheManager
 
     public void Clear()
     {
-        throw new NotImplementedException();
+        _memoryCache.Clear();
     }
 }
