@@ -1,8 +1,8 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System.NetPro;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System.NetPro;
 
-namespace Moe.Core.Infrastructure.Dependency;
+namespace MoeUC.Core.Infrastructure.Dependency;
 
 public interface IDependencyRegistrar
 {

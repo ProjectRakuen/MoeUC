@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace Moe.Core.Infrastructure.Dependency;
+namespace MoeUC.Core.Infrastructure.Dependency;
 
 public static class ApplicationContext
 {

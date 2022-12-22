@@ -1,4 +1,4 @@
-﻿namespace Moe.Core.Caching;
+﻿namespace MoeUC.Core.Caching;
 
 public interface ICacheManager
 {
@@ -18,8 +18,12 @@ public interface ICacheManager
     /// <param name="key"></param>
     /// <param name="acquire">Function to get the item</param>
     /// <returns></returns>
-    T GetAsync<T>(CacheKey key, Func<Task<T>> acquire);
+    Task<T> GetAsync<T>(CacheKey key, Func<Task<T>> acquire);
 
+    /// <summary>
+    /// remove an cached item by key
+    /// </summary>
+    /// <param name="key"></param>
     void Remove(CacheKey key);
 
     void Set(CacheKey key, object item);

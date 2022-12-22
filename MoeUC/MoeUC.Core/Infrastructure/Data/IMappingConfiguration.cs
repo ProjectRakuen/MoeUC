@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace Moe.Core.Infrastructure.Data;
+namespace MoeUC.Core.Infrastructure.Data;
 
 /// <summary>
 /// DbContext model mapping configuration

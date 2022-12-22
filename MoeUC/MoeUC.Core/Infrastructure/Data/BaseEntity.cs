@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Moe.Core.Infrastructure.Data;
+namespace MoeUC.Core.Infrastructure.Data;
 
 /// <summary>
 /// Base class for an entity

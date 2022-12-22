@@ -1,9 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection;
-using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 
-namespace Moe.Core.Infrastructure.Data;
+namespace MoeUC.Core.Infrastructure.Data;
 
 public class MoeDbContext : DbContext
 {

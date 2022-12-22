@@ -1,4 +1,4 @@
-﻿namespace Moe.Core.Infrastructure.Data;
+﻿namespace MoeUC.Core.Infrastructure.Data;
 
 public static class DbContextExtensions
 {

@@ -1,9 +1,9 @@
 ﻿using System.NetPro;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Moe.Core.Infrastructure.Dependency;
+using MoeUC.Core.Infrastructure.Dependency;
 
-namespace Moe.Core.Infrastructure.Data;
+namespace MoeUC.Core.Infrastructure.Data;
 
 public class DataDependencyRegistrar : IDependencyRegistrar
 {

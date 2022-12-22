@@ -1,8 +1,8 @@
-﻿using Moe.Core.Infrastructure.Data;
-using Moe.Core.Infrastructure.Dependency;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
+using MoeUC.Core.Infrastructure.Data;
+using MoeUC.Core.Infrastructure.Dependency;
 
-namespace Moe.Core.Infrastructure.ServiceBase;
+namespace MoeUC.Core.Infrastructure.ServiceBase;
 
 /// <summary>
 /// BaseService for a entity

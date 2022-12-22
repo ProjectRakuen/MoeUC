@@ -1,8 +1,7 @@
-﻿using System.Reflection.Emit;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Moe.Core.Infrastructure.Data;
+namespace MoeUC.Core.Infrastructure.Data;
 
 public class MoeEntityTypeConfiguration<TEntity, TId> : IMappingConfiguration, IEntityTypeConfiguration<TEntity> where TEntity : class
 {

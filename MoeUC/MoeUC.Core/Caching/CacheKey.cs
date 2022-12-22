@@ -1,4 +1,4 @@
-﻿namespace Moe.Core.Caching;
+﻿namespace MoeUC.Core.Caching;
 
 public class CacheKey
 {

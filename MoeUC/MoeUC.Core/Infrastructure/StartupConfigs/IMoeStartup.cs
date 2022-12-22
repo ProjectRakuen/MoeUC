@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Moe.Core.Infrastructure.StartupConfigs;
+namespace MoeUC.Core.Infrastructure.StartupConfigs;
 
 public interface IMoeStartup
 {
