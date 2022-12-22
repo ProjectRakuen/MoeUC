@@ -2,7 +2,7 @@
 using MoeUC.Core.Infrastructure.Data;
 using MoeUC.Core.Infrastructure.Dependency;
 
-namespace MoeUC.Core.Infrastructure.ServiceBase;
+namespace MoeUC.Service.ServiceBase;
 
 /// <summary>
 /// BaseService for a entity

@@ -29,6 +29,4 @@ public interface ICacheManager
     void Set(CacheKey key, object item);
 
     bool IsSet(CacheKey key);
-
-    void Clear();
 }

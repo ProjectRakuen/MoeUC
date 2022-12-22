@@ -10,9 +10,7 @@
     <Folder Include="Domain\" />
     <Folder Include="Infrastructure\Data\" />
     <Folder Include="Infrastructure\Dependency\" />
-    <Folder Include="Infrastructure\ServiceBase\" />
     <Folder Include="Infrastructure\StartupConfigs\" />
-    <Folder Include="Caching\" />
   </ItemGroup>
 
   <ItemGroup>

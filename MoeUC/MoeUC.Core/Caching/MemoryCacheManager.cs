@@ -5,9 +5,9 @@ namespace MoeUC.Core.Caching;
 
 public class MemoryCacheManager : ICacheManager
 {
-    private readonly MemoryCache _memoryCache;
+    private readonly IMemoryCache _memoryCache;
 
-    public MemoryCacheManager(MemoryCache memoryCache)
+    public MemoryCacheManager(IMemoryCache memoryCache)
     {
         _memoryCache = memoryCache;
     }
@@ -56,10 +56,5 @@ public class MemoryCacheManager : ICacheManager
     public bool IsSet(CacheKey key)
     {
         return _memoryCache.TryGetValue(key, out var value);
-    }
-
-    public void Clear()
-    {
-        _memoryCache.Clear();
     }
 }
