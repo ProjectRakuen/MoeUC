@@ -1,5 +1,6 @@
 ﻿using Hangfire;
 using Hangfire.InMemory;
+using MoeUC.Core.Infrastructure.Dependency;
 using MoeUC.Core.Infrastructure.StartupConfigs;
 
 namespace MoeUC.Api.StartUps;
@@ -26,7 +27,7 @@ public class HangfireStartup : IMoeStartup
     public int Order => 9999;
 }
 
-public class RecurringJobService
+public class RecurringJobService : IScoped
 {
 
 }
