@@ -24,4 +24,12 @@
 
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Startups\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MoeUC.Core\MoeUC.Core.csproj" />
+  </ItemGroup>
+
 </Project>
