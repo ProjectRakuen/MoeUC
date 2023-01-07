@@ -4,12 +4,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MoeUC.Core.Infrastructure.Dependency;
 using MoeUC.Core.Infrastructure.StartupConfigs;
+using MoeUC.Test.StartUps;
 
 namespace MoeUC.Test;
 
 public class Startup
 {
-    private List<IMoeStartup> configInstances = null!;
+    private List<IMoeTestStartup> _configInstances = null!;
 
     // Startup config for all tests
     public void ConfigureServices(IServiceCollection services, HostBuilderContext context)
@@ -41,21 +42,21 @@ public class Startup
         }
 
         // Run service startup configs
-        var startupConfigs = typeFinder.FindClassesOfType<IMoeStartup>(true).ToList();
-        configInstances = startupConfigs
-            .Select(c => (IMoeStartup)Activator.CreateInstance(c)!)
+        var startupConfigs = typeFinder.FindClassesOfType<IMoeTestStartup>(true).ToList();
+        _configInstances = startupConfigs
+            .Select(c => (IMoeTestStartup)Activator.CreateInstance(c)!)
             .OrderBy(c => c.Order)
             .ToList();
 
         // configure services
-        foreach (var item in configInstances)
+        foreach (var item in _configInstances)
         {
-            item.ConfigureServices(services, config);
+            item.ConfigureService(services, config);
         }
 
-        var serviceProvider = services.BuildServiceProvider();
+        //var serviceProvider = services.BuildServiceProvider();
         
-        ApplicationContext.Init(serviceProvider);
+        //ApplicationContext.Init(serviceProvider);
     }
 
 }

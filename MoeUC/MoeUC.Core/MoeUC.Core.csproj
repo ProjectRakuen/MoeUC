@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Domain\" />
     <Folder Include="Infrastructure\Data\" />
     <Folder Include="Infrastructure\Dependency\" />
     <Folder Include="Infrastructure\StartupConfigs\" />

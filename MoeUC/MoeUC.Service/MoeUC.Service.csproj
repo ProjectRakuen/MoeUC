@@ -10,4 +10,8 @@
     <ProjectReference Include="..\MoeUC.Core\MoeUC.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="CommonStartUps\" />
+  </ItemGroup>
+
 </Project>

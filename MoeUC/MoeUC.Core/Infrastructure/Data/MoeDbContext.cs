@@ -1,10 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
+using MoeUC.Core.Infrastructure.Dependency;
 
 namespace MoeUC.Core.Infrastructure.Data;
 
-public class MoeDbContext : DbContext
+public class MoeDbContext : DbContext, IScoped
 {
     public MoeDbContext(DbContextOptions options) : base(options)
     {
