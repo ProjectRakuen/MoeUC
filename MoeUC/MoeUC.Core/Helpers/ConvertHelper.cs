@@ -16,10 +16,14 @@ public class ConvertHelper
 
     public static string JsonSerialize(object obj)
     {
+        
         var json = JsonSerializer.Serialize(obj, new JsonSerializerOptions()
         {
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
         });
+
+        if (string.IsNullOrEmpty(json))
+            throw new JsonException("Json Serialize failed");
 
         return json;
     }
@@ -37,4 +41,10 @@ public class ConvertHelper
         using var stream = new MemoryStream(data);
         return Serializer.Deserialize<T>(stream);
     }
+}
+
+public enum MoeSerializeType
+{
+    Json = 0,
+    Proto = 1
 }

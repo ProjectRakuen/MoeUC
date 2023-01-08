@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Folder Include="Infrastructure\Data\" />
-    <Folder Include="Infrastructure\Dependency\" />
     <Folder Include="Infrastructure\StartupConfigs\" />
     <Folder Include="Helpers\" />
   </ItemGroup>
