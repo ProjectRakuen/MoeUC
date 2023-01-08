@@ -1,4 +1,6 @@
-﻿namespace MoeUC.Core.Caching;
+﻿using System.Text;
+
+namespace MoeUC.Core.Caching;
 
 public class CacheKey
 {
@@ -10,5 +12,32 @@ public class CacheKey
     {
         Key = key;
         CacheTime = cacheTime;
+    }
+
+    public CacheKey(string key, TimeSpan cacheTime, params string[] suffix)
+    {
+        var keyBuilder = new StringBuilder(key);
+
+        foreach (var item in suffix)
+        {
+            keyBuilder.Append(':');
+            keyBuilder.Append(item);
+        }
+
+        Key = keyBuilder.ToString();
+        CacheTime = cacheTime;
+    }
+
+    public CacheKey WithSuffix(params string[] suffix)
+    {
+        var keyBuilder = new StringBuilder(Key);
+
+        foreach (var item in suffix)
+        {
+            keyBuilder.Append(':');
+            keyBuilder.Append(item);
+        }
+
+        return new CacheKey(Key, CacheTime);
     }
 }

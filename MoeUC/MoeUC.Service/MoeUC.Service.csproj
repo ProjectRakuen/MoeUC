@@ -12,6 +12,12 @@
 
   <ItemGroup>
     <Folder Include="CommonStartUps\" />
+    <Folder Include="Auth\" />
+    <Folder Include="User\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.12" />
   </ItemGroup>
 
 </Project>
