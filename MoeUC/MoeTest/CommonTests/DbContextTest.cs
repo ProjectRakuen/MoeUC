@@ -1,6 +1,6 @@
 using MoeUC.Core.Infrastructure.Data;
 
-namespace MoeUC.Test
+namespace MoeUC.Test.CommonTests
 {
     public class DbContextTest : IClassFixture<MoeDbContext>
     {
@@ -8,7 +8,7 @@ namespace MoeUC.Test
 
         public DbContextTest(MoeDbContext dbContext)
         {
-            this._dbContext = dbContext;
+            _dbContext = dbContext;
         }
 
         [Fact]
