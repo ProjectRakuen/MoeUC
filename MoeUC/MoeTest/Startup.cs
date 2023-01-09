@@ -22,7 +22,10 @@ public class Startup
             .AddEnvironmentVariables()
             .Build();
 
+        var currentDir = Directory.GetCurrentDirectory();
+
         var config = context.Configuration;
+        services.AddSingleton(config);
 
         var typeFinder = new WebAppTypeFinder(new TypeFinderOption()
             {

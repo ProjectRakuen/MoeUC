@@ -1,11 +1,24 @@
-﻿using StackExchange.Redis;
+﻿using Microsoft.Extensions.Configuration;
+using MoeUC.Core.Infrastructure.Dependency;
+using MoeUC.Core.Redis;
+using StackExchange.Redis;
 
 namespace MoeUC.Core.Caching;
 
-public class RedisCacheManager : ICacheManager
+public class RedisCacheManager : ICacheManager,IScoped
 {
+    private readonly MoeRedisClient _redisClient;
+    private readonly IConfiguration _configuration;
+
     private readonly IDatabase _database;
 
+    public RedisCacheManager(MoeRedisClient redisClient, IConfiguration configuration)
+    {
+        _redisClient = redisClient;
+        _configuration = configuration;
+
+        _database = _redisClient.GetDatabase();
+    }
 
     public T Get<T>(CacheKey key, Func<T> acquire)
     {

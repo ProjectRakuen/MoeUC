@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using MoeUC.Core.Domain;
 using MoeUC.Core.Infrastructure.Data;
 
 namespace MoeUC.Test.CommonTests
@@ -16,6 +18,13 @@ namespace MoeUC.Test.CommonTests
         {
             var generateSql = _dbContext.GenerateCreateScript();
             Assert.True(!string.IsNullOrWhiteSpace(generateSql));
+        }
+
+        [Fact]
+        public async Task TestDbContext()
+        {
+            var entity = _dbContext.Set<MoeUser>();
+            await entity.FirstOrDefaultAsync();
         }
     }
 }

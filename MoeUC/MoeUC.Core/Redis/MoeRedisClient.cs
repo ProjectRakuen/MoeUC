@@ -7,8 +7,6 @@ namespace MoeUC.Core.Redis;
 
 public class MoeRedisClient : ISingleton
 {
-    private readonly IConfiguration _configuration;
-
     private readonly string _redisConnectionString;
     private volatile ConnectionMultiplexer? _connectionMultiplexer;
     private readonly object _lock = Guid.NewGuid();
@@ -16,10 +14,18 @@ public class MoeRedisClient : ISingleton
 
     public MoeRedisClient(IConfiguration configuration)
     {
-        this._configuration = configuration;
+        var config = configuration.ToString();
+        _redisConnectionString = configuration["RedisConnectionString"];
 
-        _redisConnectionString = configuration["Redis:ConnectionString"]!;
-        _databaseId = int.TryParse(configuration["Redis:DatabaseId"], out var databaseId) ?
+        if (string.IsNullOrWhiteSpace(_redisConnectionString))
+            throw new ArgumentNullException();
+
+        var dataBaseIdStr = configuration.GetSection("RedisDatabaseId").Value;
+
+        if (string.IsNullOrWhiteSpace(dataBaseIdStr))
+            throw new ArgumentNullException();
+
+        _databaseId = int.TryParse(dataBaseIdStr, out var databaseId) ?
             databaseId : 0;
     }
 
