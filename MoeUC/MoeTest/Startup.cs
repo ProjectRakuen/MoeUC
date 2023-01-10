@@ -22,8 +22,6 @@ public class Startup
             .AddEnvironmentVariables()
             .Build();
 
-        var currentDir = Directory.GetCurrentDirectory();
-
         var config = context.Configuration;
         services.AddSingleton(config);
 
@@ -57,9 +55,9 @@ public class Startup
             item.ConfigureService(services, config);
         }
 
-        //var serviceProvider = services.BuildServiceProvider();
+        var serviceProvider = services.BuildServiceProvider();
         
-        //ApplicationContext.Init(serviceProvider);
+        ApplicationContext.Init(serviceProvider);
     }
 
 }
