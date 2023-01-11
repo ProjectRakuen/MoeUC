@@ -14,7 +14,7 @@ public class CacheKey
         CacheTime = cacheTime;
     }
 
-    public CacheKey(string key, TimeSpan cacheTime, params string[] suffix)
+    public CacheKey(string key, TimeSpan cacheTime, params object[] suffix)
     {
         var keyBuilder = new StringBuilder(key);
 
@@ -28,7 +28,7 @@ public class CacheKey
         CacheTime = cacheTime;
     }
 
-    public CacheKey WithSuffix(params string[] suffix)
+    public CacheKey WithSuffix(params object[] suffix)
     {
         var keyBuilder = new StringBuilder(Key);
 

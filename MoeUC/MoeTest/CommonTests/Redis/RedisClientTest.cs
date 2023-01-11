@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using MoeUC.Core.Redis;
 
-namespace MoeUC.Test.CommonTests;
+namespace MoeUC.Test.CommonTests.Redis;
 
 public class RedisClientTest : IClassFixture<MoeRedisClient>
 {
