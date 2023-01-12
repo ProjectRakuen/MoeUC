@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using MoeUC.Core.Helpers;
 using MoeUC.Core.Infrastructure.Dependency;
 using MoeUC.Core.Redis;
 using StackExchange.Redis;
@@ -25,9 +26,21 @@ public class RedisCacheManager : ICacheManager,IScoped
         throw new NotImplementedException();
     }
 
+    public T Get<T>(CacheKey key)
+    {
+        throw new NotImplementedException();
+    }
+
     public Task<T> GetAsync<T>(CacheKey key, Func<Task<T>> acquire)
     {
         throw new NotImplementedException();
+    }
+
+    public async Task<T?> GetAsync<T>(CacheKey key)
+    {
+        var cachedItem = await _database.StringGetAsync(key.Key);
+
+        return !cachedItem.HasValue ? default : ConvertHelper.AutoDeserialize<T>(cachedItem);
     }
 
     public void Remove(CacheKey key)
