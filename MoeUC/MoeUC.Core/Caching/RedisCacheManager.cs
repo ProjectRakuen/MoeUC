@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using MoeUC.Core.Helpers;
+﻿using MoeUC.Core.Helpers;
 using MoeUC.Core.Infrastructure.Dependency;
 using MoeUC.Core.Redis;
 using StackExchange.Redis;
@@ -8,53 +7,74 @@ namespace MoeUC.Core.Caching;
 
 public class RedisCacheManager : ICacheManager,IScoped
 {
-    private readonly MoeRedisClient _redisClient;
-    private readonly IConfiguration _configuration;
 
     private readonly IDatabase _database;
 
-    public RedisCacheManager(MoeRedisClient redisClient, IConfiguration configuration)
+    public RedisCacheManager(MoeRedisClient redisClient)
     {
-        _redisClient = redisClient;
-        _configuration = configuration;
-
-        _database = _redisClient.GetDatabase();
+        _database = redisClient.GetDatabase();
     }
 
-    public T Get<T>(CacheKey key, Func<T> acquire)
+    public T? Get<T>(CacheKey key, Func<T?> acquire)
     {
-        throw new NotImplementedException();
+        if (IsSet(key))
+            return Get<T>(key);
+
+        var toCacheItem = acquire();
+        Set(key, toCacheItem);
+        return toCacheItem;
     }
 
-    public T Get<T>(CacheKey key)
+    public T? Get<T>(CacheKey key)   
     {
-        throw new NotImplementedException();
+        var cachedItem = _database.StringGet(key.Key);
+
+        return cachedItem.HasValue ? default : ConvertHelper.AutoDeserialize<T>(cachedItem!);
     }
 
-    public Task<T> GetAsync<T>(CacheKey key, Func<Task<T>> acquire)
+    public async Task<T?> GetAsync<T>(CacheKey key, Func<Task<T>> acquire)
     {
-        throw new NotImplementedException();
+        if (await IsSetAsync(key))
+        {
+            return await GetAsync<T>(key);
+        }
+
+        var toCacheItem = await acquire();
+        await SetAsync(key, toCacheItem);
+
+        return toCacheItem;
     }
 
-    public async Task<T?> GetAsync<T>(CacheKey key)
+    public async Task<T?> GetAsync<T>(CacheKey key)    
     {
         var cachedItem = await _database.StringGetAsync(key.Key);
 
-        return !cachedItem.HasValue ? default : ConvertHelper.AutoDeserialize<T>(cachedItem);
+        return cachedItem.HasValue ? default : ConvertHelper.AutoDeserialize<T>(cachedItem!);
+
     }
 
     public void Remove(CacheKey key)
     {
-        throw new NotImplementedException();
+        _database.KeyDelete(key.Key);
     }
 
-    public void Set(CacheKey key, object item)
+    public void Set(CacheKey key, object? item)
     {
-        throw new NotImplementedException();
+        _database.StringSet(key.Key, ConvertHelper.AutoSerialize(item));
+    }
+
+    public async Task SetAsync(CacheKey key, object? item)
+    {
+        await _database.StringSetAsync(key.Key, ConvertHelper.AutoSerialize(item));
     }
 
     public bool IsSet(CacheKey key)
     {
-        throw new NotImplementedException();
+        return _database.KeyExists(key.Key);
+    }
+
+    public async Task<bool> IsSetAsync(CacheKey key)
+    {
+        return await _database.KeyExistsAsync(key.Key);
     }
 }

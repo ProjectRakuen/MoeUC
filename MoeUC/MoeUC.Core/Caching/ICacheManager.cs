@@ -9,7 +9,7 @@ public interface ICacheManager
     /// <param name="key"></param>
     /// <param name="acquire">Function to get the item</param>
     /// <returns></returns>
-    T Get<T>(CacheKey key, Func<T> acquire);
+    T? Get<T>(CacheKey key, Func<T?> acquire);
 
     /// <summary>
     /// Get or cache an item
@@ -18,7 +18,7 @@ public interface ICacheManager
     /// <param name="key"></param>
     /// <param name="acquire">Function to get the item</param>
     /// <returns></returns>
-    Task<T> GetAsync<T>(CacheKey key, Func<Task<T>> acquire);
+    Task<T?> GetAsync<T>(CacheKey key, Func<Task<T>> acquire);
 
     /// <summary>
     /// remove an cached item by key
