@@ -20,4 +20,10 @@ public static class ApplicationContext
 
         return result;
     }
+
+    public static List<T> ResolveAll<T>()
+    {
+        var result = ServiceProvider.GetServices<T>();
+        return result.ToList();
+    }
 }
