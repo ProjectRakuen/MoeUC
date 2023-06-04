@@ -12,7 +12,7 @@ public class MemoryCacheManager : ICacheManager
         _memoryCache = memoryCache;
     }
 
-    public T Get<T>(CacheKey key, Func<T> acquire)
+    public T? Get<T>(CacheKey key, Func<T?> acquire)
     {
         if (_memoryCache.TryGetValue(key.Key, out T? result) && result != null)
             return result;
@@ -26,7 +26,7 @@ public class MemoryCacheManager : ICacheManager
         return result;
     }
 
-    public async Task<T> GetAsync<T>(CacheKey key, Func<Task<T>> acquire)
+    public async Task<T?> GetAsync<T>(CacheKey key, Func<Task<T>> acquire)
     {
         if (_memoryCache.TryGetValue(key.Key, out T? result) && result != null)
             return result;

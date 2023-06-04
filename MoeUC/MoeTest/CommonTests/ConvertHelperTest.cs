@@ -17,7 +17,8 @@ public class ConvertHelperTest : IClassFixture<ConvertHelper>
 
         var json = ConvertHelper.JsonSerialize(mock);
         var obj = ConvertHelper.JsonDeserialize<MockProtoEntity>(json);
-
+        
+        Assert.NotNull(obj);
         Assert.Equal(mock.Num, obj.Num);
         Assert.Equal(mock.Num, obj.Num);
     }
@@ -33,6 +34,7 @@ public class ConvertHelperTest : IClassFixture<ConvertHelper>
         var proto = ConvertHelper.ProtoSerialize(mock);
         var obj = ConvertHelper.ProtoDeserialize<MockProtoEntity>(proto);
 
+        Assert.NotNull(obj);
         Assert.Equal(mock.Name, obj.Name);
         Assert.Equal(mock.Num, obj.Num);
     }

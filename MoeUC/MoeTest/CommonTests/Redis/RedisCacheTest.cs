@@ -18,7 +18,7 @@ public class RedisCacheTest : IClassFixture<RedisCacheManager>
         var entity = GetMockProtoEntity();
         var key = new CacheKey("MoeTest:RedisCacheTest", TimeSpan.FromMinutes(10), entity.Id);
         var inCacheEntity = _cacheManager.Get(key, () => entity);
-        Assert.True(inCacheEntity.Equals(entity));
+        Assert.True(inCacheEntity?.Equals(entity));
         Assert.True(_cacheManager.IsSet(key));
         
         _cacheManager.Remove(key);

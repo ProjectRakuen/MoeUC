@@ -16,7 +16,7 @@ public class DbStartup : IMoeStartup
                     options.UseSqlServer(configuration.GetConnectionString("MoeUC")));
             if (dbms.Equals("MySQL", StringComparison.InvariantCultureIgnoreCase))
                 services.AddDbContext<MoeDbContext>(options =>
-                    options.UseMySQL(configuration.GetConnectionString("MoeUC")));
+                    options.UseMySQL(configuration.GetConnectionString("MoeUC")!));
         }
         else
             throw new Exception("Must specify DBMS name.");

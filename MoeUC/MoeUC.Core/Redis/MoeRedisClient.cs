@@ -15,7 +15,7 @@ public class MoeRedisClient : ISingleton
     public MoeRedisClient(IConfiguration configuration)
     {
         var config = configuration.ToString();
-        _redisConnectionString = configuration["RedisConnectionString"];
+        _redisConnectionString = configuration["RedisConnectionString"]!;
 
         if (string.IsNullOrWhiteSpace(_redisConnectionString))
             throw new ArgumentNullException();
