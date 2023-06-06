@@ -7,7 +7,7 @@ namespace MoeUC.Service.ServiceBase.Models;
 
 public class WorkContext : IScoped
 {
-    private readonly HttpContext _httpContext;
+    private readonly HttpContext? _httpContext;
     private readonly ILogger<WorkContext> _logger;
     private readonly JwtHelper _jwtHelper;
     private const string RequestStatisticsName = "Base:RequestStatistic";
@@ -27,19 +27,19 @@ public class WorkContext : IScoped
         }
     }
 
-    public WorkContext(HttpContext httpContext, ILogger<WorkContext> logger, JwtHelper jwtHelper)
+    public WorkContext(IHttpContextAccessor httpContextAccessor, ILogger<WorkContext> logger, JwtHelper jwtHelper)
     {
-        _httpContext = httpContext;
+        this._httpContext = httpContextAccessor.HttpContext;
         _logger = logger;
         _jwtHelper = jwtHelper;
-        if (!httpContext.Items.ContainsKey(RequestStatisticsName))
+        if (_httpContext != null && !_httpContext.Items.ContainsKey(RequestStatisticsName))
         {
             this.RequestStatistic = new RequestStatisticModel();
-            httpContext.Items.Add(RequestStatisticsName, RequestStatistic);
+            _httpContext.Items.Add(RequestStatisticsName, RequestStatistic);
         }
         else
         {
-            this.RequestStatistic = (RequestStatisticModel?)(httpContext.Items[RequestStatisticsName]) ?? new RequestStatisticModel();
+            this.RequestStatistic = (RequestStatisticModel?)(_httpContext?.Items[RequestStatisticsName]) ?? new RequestStatisticModel();
         }
     }
 
@@ -50,7 +50,7 @@ public class WorkContext : IScoped
             Success = true,
             Data = data,
             Message = message,
-            Statistics = (RequestStatisticModel?)_httpContext.Items[RequestStatisticsName]
+            Statistics = (RequestStatisticModel?)_httpContext?.Items[RequestStatisticsName]
         };
     }
 

@@ -4,7 +4,7 @@ using MoeUC.Core.Infrastructure.Dependency;
 
 namespace MoeUC.Service.Security;
 
-public class AuthorizationPolicyProvider : DefaultAuthorizationPolicyProvider,IScoped
+public class AuthorizationPolicyProvider : DefaultAuthorizationPolicyProvider
 {
     private readonly AuthorizationOptions _options;
     private static readonly object Locker = new object();
