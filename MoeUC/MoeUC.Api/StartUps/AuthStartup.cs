@@ -12,6 +12,7 @@ public class AuthStartup : IMoeStartup
     public void ConfigureServices(IServiceCollection services, IConfiguration configuration)
     {
         services.AddScoped<IAuthorizationPolicyProvider, AuthorizationPolicyProvider>();
+        services.AddScoped<IAuthorizationHandler, MoePolicyAuthorizationHandler>();
         
         services.AddAuthorization();
         services.AddAuthentication(SecurityConstants.MoeSchemeName)
