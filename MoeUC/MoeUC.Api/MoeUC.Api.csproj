@@ -17,10 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MoeUC.Core\MoeUC.Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\MoeUC.Service\MoeUC.Service.csproj" />
   </ItemGroup>
 
 </Project>

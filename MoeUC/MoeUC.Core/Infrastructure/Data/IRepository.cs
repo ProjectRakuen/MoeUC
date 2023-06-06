@@ -24,38 +24,38 @@ public interface IRepository<TEntity, in TId> where TEntity : BaseEntity<TId>
     /// </summary>
     /// <param name="entity"></param>
     /// <returns></returns>
-    Task InsertAsync(TEntity entity);
+    Task<int> InsertAsync(TEntity entity);
 
     /// <summary>
     /// Insert entities
     /// </summary>
     /// <param name="entities"></param>
     /// <returns></returns>
-    Task InsertAsync(IEnumerable<TEntity> entities);
+    Task<int> InsertAsync(IEnumerable<TEntity> entities);
 
     /// <summary>
     /// Update entity
     /// </summary>
     /// <param name="entity"></param>
-    Task UpdateAsync(TEntity entity);
+    Task<int> UpdateAsync(TEntity entity);
 
     /// <summary>
     /// Update entities
     /// </summary>
     /// <param name="entities"></param>
-    Task UpdateAsync(IEnumerable<TEntity> entities);
+    Task<int> UpdateAsync(IEnumerable<TEntity> entities);
 
     /// <summary>
     /// Delete entity
     /// </summary>
     /// <param name="entity"></param>
-    Task DeleteAsync(TEntity entity);
+    Task<int> DeleteAsync(TEntity entity);
 
     /// <summary>
     /// Delete entities
     /// </summary>
     /// <param name="entities"></param>
-    Task DeleteAsync(IEnumerable<TEntity> entities);
+    Task<int> DeleteAsync(IEnumerable<TEntity> entities);
 }
 
 /// <summary>

@@ -18,6 +18,19 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.12" />
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="ServiceBase\Helpers\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="ServiceBase\Helpers\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="ServiceBase\Helpers\**" />
   </ItemGroup>
 
 </Project>

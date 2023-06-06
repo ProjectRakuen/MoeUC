@@ -10,18 +10,18 @@ namespace MoeUC.Core.Infrastructure.Data;
 /// <typeparam name="TId"></typeparam>
 public class EntityFrameworkCoreRepository<TEntity, TId> : IRepository<TEntity, TId> where TEntity : BaseEntity<TId>
 {
-    private readonly MoeDbContext dbContext;
+    private readonly MoeDbContext _dbContext;
 
-    private DbSet<TEntity>? entityDbSet;
+    private DbSet<TEntity>? _entityDbSet;
 
     public EntityFrameworkCoreRepository(MoeDbContext dbContext)
     {
-        this.dbContext = dbContext;
+        this._dbContext = dbContext;
     }
 
     protected virtual DbSet<TEntity> Entities
     {
-        get { return entityDbSet ??= dbContext.Set<TEntity>(); }
+        get { return _entityDbSet ??= _dbContext.Set<TEntity>(); }
     }
 
     public virtual IQueryable<TEntity> Table => Entities;
@@ -38,7 +38,7 @@ public class EntityFrameworkCoreRepository<TEntity, TId> : IRepository<TEntity, 
         return entity;
     }
 
-    public async Task InsertAsync(TEntity entity)
+    public async Task<int> InsertAsync(TEntity entity)
     {
         if (entity == null)
             throw new ArgumentNullException(nameof(entity));
@@ -46,16 +46,18 @@ public class EntityFrameworkCoreRepository<TEntity, TId> : IRepository<TEntity, 
         try
         {
             await Entities.AddAsync(entity);
-            await dbContext.SaveChangesAsync();
+            return await _dbContext.SaveChangesAsync();
         }
         catch (DbUpdateException exception)
         {
             //ensure that the detailed error text is saved in the Log
             throw new Exception(GetErrorMessageAndRollBackChanges(exception), exception);
         }
+
+        return 0;
     }
 
-    public async Task InsertAsync(IEnumerable<TEntity> entities)
+    public async Task<int> InsertAsync(IEnumerable<TEntity> entities)
     {
         if (entities == null)
             throw new ArgumentNullException(nameof(entities));
@@ -63,7 +65,7 @@ public class EntityFrameworkCoreRepository<TEntity, TId> : IRepository<TEntity, 
         try
         {
             await Entities.AddRangeAsync(entities);
-            await dbContext.SaveChangesAsync();
+            return await _dbContext.SaveChangesAsync();
         }
         catch (DbUpdateException exception)
         {
@@ -72,7 +74,7 @@ public class EntityFrameworkCoreRepository<TEntity, TId> : IRepository<TEntity, 
         }
     }
 
-    public async Task UpdateAsync(TEntity entity)
+    public async Task<int> UpdateAsync(TEntity entity)
     {
         if (entity == null)
             throw new ArgumentNullException(nameof(entity));
@@ -80,7 +82,7 @@ public class EntityFrameworkCoreRepository<TEntity, TId> : IRepository<TEntity, 
         try
         {
             Entities.Update(entity);
-            await dbContext.SaveChangesAsync();
+            return await _dbContext.SaveChangesAsync();
         }
         catch (DbUpdateException exception)
         {
@@ -89,7 +91,7 @@ public class EntityFrameworkCoreRepository<TEntity, TId> : IRepository<TEntity, 
         }
     }
 
-    public async Task UpdateAsync(IEnumerable<TEntity> entities)
+    public async Task<int> UpdateAsync(IEnumerable<TEntity> entities)
     {
         if (entities == null)
             throw new ArgumentNullException(nameof(entities));
@@ -97,7 +99,7 @@ public class EntityFrameworkCoreRepository<TEntity, TId> : IRepository<TEntity, 
         try
         {
             Entities.UpdateRange(entities);
-            await dbContext.SaveChangesAsync();
+            return await _dbContext.SaveChangesAsync();
         }
         catch (DbUpdateException exception)
         {
@@ -106,7 +108,7 @@ public class EntityFrameworkCoreRepository<TEntity, TId> : IRepository<TEntity, 
         }
     }
 
-    public async Task DeleteAsync(TEntity entity)
+    public async Task<int> DeleteAsync(TEntity entity)
     {
         if (entity == null)
             throw new ArgumentNullException(nameof(entity));
@@ -114,7 +116,7 @@ public class EntityFrameworkCoreRepository<TEntity, TId> : IRepository<TEntity, 
         try
         {
             Entities.Remove(entity);
-            await dbContext.SaveChangesAsync();
+            return await _dbContext.SaveChangesAsync();
         }
         catch (DbUpdateException exception)
         {
@@ -123,7 +125,7 @@ public class EntityFrameworkCoreRepository<TEntity, TId> : IRepository<TEntity, 
         }
     }
 
-    public async Task DeleteAsync(IEnumerable<TEntity> entities)
+    public async Task<int> DeleteAsync(IEnumerable<TEntity> entities)
     {
         if (entities == null)
             throw new ArgumentNullException(nameof(entities));
@@ -131,7 +133,7 @@ public class EntityFrameworkCoreRepository<TEntity, TId> : IRepository<TEntity, 
         try
         {
             Entities.RemoveRange(entities);
-            await dbContext.SaveChangesAsync();
+            return await _dbContext.SaveChangesAsync();
         }
         catch (DbUpdateException exception)
         {
@@ -148,7 +150,7 @@ public class EntityFrameworkCoreRepository<TEntity, TId> : IRepository<TEntity, 
     protected string GetErrorMessageAndRollBackChanges(DbUpdateException exception)
     {
         // rollback changes
-        if (this.dbContext is DbContext dbContext)
+        if (this._dbContext is DbContext dbContext)
         {
             var entries = dbContext.ChangeTracker.Entries()
                 .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified).ToList();
@@ -168,7 +170,7 @@ public class EntityFrameworkCoreRepository<TEntity, TId> : IRepository<TEntity, 
 
         try
         {
-            this.dbContext.SaveChanges();
+            this._dbContext.SaveChanges();
             return exception.ToString();
         }
         catch (Exception ex)

@@ -1,6 +1,7 @@
 ﻿using System.Linq.Expressions;
 using MoeUC.Core.Infrastructure.Data;
 using MoeUC.Core.Infrastructure.Dependency;
+using MoeUC.Service.ServiceBase.Models;
 
 namespace MoeUC.Service.ServiceBase;
 
@@ -11,21 +12,24 @@ namespace MoeUC.Service.ServiceBase;
 /// <typeparam name="TId">Identity type of the entity</typeparam>
 public class BaseService<TEntity, TId> : IScoped where TEntity : BaseEntity<TId>
 {
-    protected readonly IRepository<TEntity, TId> Repository;
+    private readonly IRepository<TEntity, TId> _repository;
+    protected readonly WorkContext WorkContext;
 
-    public BaseService(IRepository<TEntity, TId> repository)
+    protected BaseService(IRepository<TEntity, TId> repository, WorkContext workContext)
     {
-        Repository = repository;
+        _repository = repository;
+        WorkContext = workContext;
     }
 
     public virtual async Task<TEntity?> GetByIdAsync(TId id)
     {
-        return await Repository.GetByIdAsync(id);
+        WorkContext.RequestStatistic.DbRead++;
+        return await _repository.GetByIdAsync(id);
     }
 
     public virtual async Task InsertAsync(TEntity entity)
     {
-        await Repository.InsertAsync(entity);
+        WorkContext.RequestStatistic.DbWrite += await _repository.InsertAsync(entity);
     }
 
     public virtual async Task InsertAsync(IEnumerable<TEntity> entities)
@@ -33,38 +37,38 @@ public class BaseService<TEntity, TId> : IScoped where TEntity : BaseEntity<TId>
         if (entities == null)
             throw new ArgumentNullException(nameof(entities));
 
-        await Repository.InsertAsync(entities);
+        WorkContext.RequestStatistic.DbWrite  += await _repository.InsertAsync(entities);
     }
 
     public virtual async Task UpdateAsync(TEntity entity)
     {
-        await Repository.UpdateAsync(entity);
+        WorkContext.RequestStatistic.DbWrite += await _repository.UpdateAsync(entity);
     }
 
     public virtual async Task UpdateAsync(IEnumerable<TEntity> entities)
     {
-        await Repository.UpdateAsync(entities);
+        WorkContext.RequestStatistic.DbWrite += await _repository.UpdateAsync(entities);
     }
 
     public virtual async Task DeleteAsync(TEntity entity)
     {
-        await Repository.DeleteAsync(entity);
+        WorkContext.RequestStatistic.DbWrite += await _repository.DeleteAsync(entity);
     }
 
     public async Task DeleteAsync(IEnumerable<TEntity> entities)
     {
-        await Repository.DeleteAsync(entities);
+        WorkContext.RequestStatistic.DbWrite += await _repository.DeleteAsync(entities);
     }
 
     public virtual IQueryable<TEntity> Find(Expression<Func<TEntity, bool>> where, bool tracking = false)
     {
-        return (tracking ? Repository.Table : Repository.TableNoTracking)
+        return (tracking ? _repository.Table : _repository.TableNoTracking)
             .Where(where);
     }
 
     public virtual IQueryable<TEntity> FindAll(bool tracking = false)
     {
-        return tracking ? Repository.Table : Repository.TableNoTracking;
+        return tracking ? _repository.Table : _repository.TableNoTracking;
     }
 }
 
@@ -75,7 +79,7 @@ public class BaseService<TEntity, TId> : IScoped where TEntity : BaseEntity<TId>
 /// <typeparam name="T">Concrete type of the entity</typeparam>
 public class BaseService<T> : BaseService<T, int> where T : BaseEntity<int>
 {
-    public BaseService(IRepository<T> repository) : base(repository)
+    public BaseService(IRepository<T> repository, WorkContext workContext) : base(repository, workContext)
     {
     }
 
