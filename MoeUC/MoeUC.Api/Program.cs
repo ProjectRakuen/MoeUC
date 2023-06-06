@@ -10,6 +10,7 @@ var typeFinder = new WebAppTypeFinder(new TypeFinderOption()
     }, builder.Configuration,
     new NetProFileProvider(builder.Environment));
 
+builder.Services.AddHttpContextAccessor();
 var dependencyRegistrars = typeFinder.FindClassesOfType<IDependencyRegistrar>(true);
 var registrarInstances = dependencyRegistrars
     .Select(c => (IDependencyRegistrar)Activator.CreateInstance(c)!)
