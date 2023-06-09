@@ -11,12 +11,14 @@ public class AuthStartup : IMoeStartup
 {
     public void ConfigureServices(IServiceCollection services, IConfiguration configuration)
     {
-        services.AddScoped<IAuthorizationPolicyProvider, AuthorizationPolicyProvider>();
-        services.AddScoped<IAuthorizationHandler, MoePolicyAuthorizationHandler>();
-        
-        services.AddAuthorization();
+
+
+        //services.AddAuthorizationCore();
         services.AddAuthentication(SecurityConstants.MoeSchemeName)
             .AddScheme<MoeAuthenticationOptions, MoeJwtAuthenticationHandler>(SecurityConstants.MoeSchemeName, c => { });
+
+        services.AddSingleton<IAuthorizationPolicyProvider, AuthorizationPolicyProvider>();
+        services.AddScoped<IAuthorizationHandler, MoePolicyAuthorizationHandler>();
     }
 
     public void Configure(IApplicationBuilder application)

@@ -9,9 +9,9 @@ public class AuthorizationPolicyProvider : DefaultAuthorizationPolicyProvider
     private readonly AuthorizationOptions _options;
     private static readonly object Locker = new object();
     
-    public AuthorizationPolicyProvider(IOptions<AuthorizationOptions> options, AuthorizationOptions options1) : base(options)
+    public AuthorizationPolicyProvider(IOptions<AuthorizationOptions> options) : base(options)
     {
-        _options = options1;
+        _options = options.Value;
     }
 
     public override async Task<AuthorizationPolicy?> GetPolicyAsync(string policyName)

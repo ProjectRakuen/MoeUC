@@ -4,7 +4,7 @@ using MoeUC.Service.ServiceBase.Models;
 
 namespace MoeUC.Service.Security;
 
-public class MoePolicyAuthorizationHandler : AuthorizationHandler<MoePolicyRequirement>, IScoped
+public class MoePolicyAuthorizationHandler : AuthorizationHandler<MoePolicyRequirement>
 {
     private readonly WorkContext _workContext;
 

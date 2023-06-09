@@ -14,7 +14,6 @@ public class TestController : BaseApiController
     }
 #if DEBUG
     [HttpGet]
-    [Authorize()]
     public string GetCreationSql()
     {
         return _moeDbContext.GenerateCreateScript();

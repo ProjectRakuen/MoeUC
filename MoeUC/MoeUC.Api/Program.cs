@@ -1,6 +1,8 @@
 using System.NetPro;
+using Microsoft.AspNetCore.Authorization;
 using MoeUC.Core.Infrastructure.Dependency;
 using MoeUC.Core.Infrastructure.StartupConfigs;
+using MoeUC.Service.Security;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +11,8 @@ var typeFinder = new WebAppTypeFinder(new TypeFinderOption()
         MountePath = ".\\"
     }, builder.Configuration,
     new NetProFileProvider(builder.Environment));
+
+builder.Services.AddOptions();
 
 builder.Services.AddHttpContextAccessor();
 var dependencyRegistrars = typeFinder.FindClassesOfType<IDependencyRegistrar>(true);
