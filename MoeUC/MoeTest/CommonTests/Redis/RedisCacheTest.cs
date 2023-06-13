@@ -30,10 +30,11 @@ public class RedisCacheTest : IClassFixture<RedisCacheManager>
     {
         var entity = GetMockProtoEntity();
         var key = new CacheKey("MoeTest:RedisCacheExpireTest", TimeSpan.FromSeconds(5));
+        _cacheManager.Remove(key);
         _cacheManager.Set(key, entity);
         Assert.True(_cacheManager.IsSet(key));
 
-        await Task.Delay(10);
+        await Task.Delay(TimeSpan.FromSeconds(10));
         Assert.False(_cacheManager.IsSet(key));
     }
 

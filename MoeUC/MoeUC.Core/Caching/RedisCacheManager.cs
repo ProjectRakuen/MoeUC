@@ -60,12 +60,12 @@ public class RedisCacheManager : ICacheManager,IScoped
 
     public void Set(CacheKey key, object? item)
     {
-        _database.StringSet(key.Key, ConvertHelper.AutoSerialize(item));
+        _database.StringSet(key.Key, ConvertHelper.AutoSerialize(item), expiry:key.CacheTime);
     }
 
     public async Task SetAsync(CacheKey key, object? item)
     {
-        await _database.StringSetAsync(key.Key, ConvertHelper.AutoSerialize(item));
+        await _database.StringSetAsync(key.Key, ConvertHelper.AutoSerialize(item), expiry:key.CacheTime);
     }
 
     public bool IsSet(CacheKey key)

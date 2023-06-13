@@ -17,7 +17,7 @@ public class JwtHelper : IScoped
 
     public JwtHelper(IConfiguration configuration)
     {
-        _secretKey = configuration["Jwt:Issuer"]!;
+        _secretKey = configuration["Jwt:SecretKey"]!;
         _issuer = configuration["Jwt:Issuer"]!;
         _audience = configuration["Jwt:Audience"]!;
     }
@@ -52,6 +52,8 @@ public class JwtHelper : IScoped
         var validateParams = new TokenValidationParameters();
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_secretKey));
         validateParams.IssuerSigningKey = key;
+        validateParams.ValidIssuer = _issuer;
+        validateParams.ValidAudience = _audience;
         var claimsPrinciple = tokenHandler.ValidateToken(token, validateParams, out var secToken);
         var claim = claimsPrinciple.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
         return !string.IsNullOrWhiteSpace(claim?.Value) ? int.Parse(claim.Value) : 0;

@@ -38,10 +38,20 @@
 
   <ItemGroup>
     <Folder Include="Startups\" />
+    <Folder Include="Auth\" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\MoeUC.Core\MoeUC.Core.csproj" />
+    <ProjectReference Include="..\MoeUC.Service\MoeUC.Service.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="appsettings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>appsettings.json</DependentUpon>
+    </Compile>
   </ItemGroup>
 
 </Project>
