@@ -40,4 +40,6 @@ public class CacheKey
 
         return new CacheKey(Key, CacheTime);
     }
+
+    public long AbsoluteExpireTimeStamp => DateTimeOffset.Now.Add(CacheTime).ToUnixTimeMilliseconds();
 }
