@@ -69,9 +69,9 @@ public class MoeRedisClient : ISingleton
         var subscriber = GetSubscriber();
                 
         if (serializeType == MoeSerializeType.Proto)
-                return subscriber.Publish(channel, ConvertHelper.ProtoSerialize(message));
+                return subscriber.Publish(RedisChannel.Literal(channel), ConvertHelper.ProtoSerialize(message));
     
-        return subscriber.Publish(channel ,message is string str ? str : ConvertHelper.JsonSerialize(message));
+        return subscriber.Publish(RedisChannel.Literal(channel) ,message is string str ? str : ConvertHelper.JsonSerialize(message));
     }
 
     private ISubscriber GetSubscriber()
@@ -81,12 +81,12 @@ public class MoeRedisClient : ISingleton
 
     public void Subscribe(string channel, Action<RedisChannel, RedisValue> handelAction)
     {
-        GetSubscriber().Subscribe(channel, handelAction);
+        GetSubscriber().Subscribe(RedisChannel.Literal(channel), handelAction);
     }
 
     public async Task SubscribeAsync(string channel, Action<RedisChannel, RedisValue> handelAction)
     {
-        await GetSubscriber().SubscribeAsync(channel, handelAction);
+        await GetSubscriber().SubscribeAsync(RedisChannel.Literal(channel), handelAction);
     }
 
 
