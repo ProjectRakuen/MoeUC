@@ -8,18 +8,22 @@ using MoeUC.Core.Infrastructure.Dependency;
 
 namespace MoeUC.Service.Auth;
 
-public class JwtHelper : IScoped
+public class AuthHelper : IScoped
 {
     private readonly string _secretKey;
     private readonly string _issuer;
     private readonly string _audience;
+    private readonly string _salt;
+    private readonly string _postSalt;
 
 
-    public JwtHelper(IConfiguration configuration)
+    public AuthHelper(IConfiguration configuration)
     {
         _secretKey = configuration["Jwt:SecretKey"]!;
         _issuer = configuration["Jwt:Issuer"]!;
         _audience = configuration["Jwt:Audience"]!;
+        _salt = configuration["Auth:Salt"]!;
+        _postSalt = configuration["Auth:PostSalt"]!;
     }
 
     public string Create(int userId)
@@ -57,5 +61,15 @@ public class JwtHelper : IScoped
         var claimsPrinciple = tokenHandler.ValidateToken(token, validateParams, out var secToken);
         var claim = claimsPrinciple.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
         return !string.IsNullOrWhiteSpace(claim?.Value) ? int.Parse(claim.Value) : 0;
+    }
+
+    public async Task<string> GetAuthStringHash(string authString)
+    {
+        var md5 = MD5.Create();
+        var sourceBytes = Encoding.UTF8.GetBytes(authString + _salt);
+        using var stream = new MemoryStream(sourceBytes);
+        var bytes = await md5.ComputeHashAsync(stream);
+
+        return Convert.ToBase64String(bytes) + _postSalt;
     }
 }

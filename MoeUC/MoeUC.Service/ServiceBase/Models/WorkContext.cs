@@ -9,7 +9,7 @@ public class WorkContext : IScoped
 {
     private readonly HttpContext? _httpContext;
     private readonly ILogger<WorkContext> _logger;
-    private readonly JwtHelper _jwtHelper;
+    private readonly AuthHelper _authHelper;
     private const string RequestStatisticsName = "Base:RequestStatistic";
     private const string AuthTokenName = "AuthToken";
     public readonly RequestStatisticModel RequestStatistic;
@@ -21,17 +21,17 @@ public class WorkContext : IScoped
             var token = _httpContext?.Request?.Headers?[AuthTokenName];
             if (token.HasValue)
             {
-                var userId = _jwtHelper.GetUserIdFromToken(token.Value.FirstOrDefault());
+                var userId = _authHelper.GetUserIdFromToken(token.Value.FirstOrDefault());
             }
             return new UserInfoModel();
         }
     }
 
-    public WorkContext(IHttpContextAccessor httpContextAccessor, ILogger<WorkContext> logger, JwtHelper jwtHelper)
+    public WorkContext(IHttpContextAccessor httpContextAccessor, ILogger<WorkContext> logger, AuthHelper authHelper)
     {
         this._httpContext = httpContextAccessor.HttpContext;
         _logger = logger;
-        _jwtHelper = jwtHelper;
+        _authHelper = authHelper;
         if (_httpContext != null && !_httpContext.Items.ContainsKey(RequestStatisticsName))
         {
             this.RequestStatistic = new RequestStatisticModel();
