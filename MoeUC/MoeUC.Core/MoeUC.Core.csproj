@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Caching\" />
     <Folder Include="Infrastructure\Data\" />
     <Folder Include="Infrastructure\StartupConfigs\" />
     <Folder Include="Helpers\" />

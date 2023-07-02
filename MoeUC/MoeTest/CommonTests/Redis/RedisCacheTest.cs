@@ -1,4 +1,4 @@
-﻿using MoeUC.Core.Caching;
+﻿using MoeUC.Service.ServiceBase.Caching;
 using MoeUC.Test.CommonTests.Mocks;
 
 namespace MoeUC.Test.CommonTests.Redis;

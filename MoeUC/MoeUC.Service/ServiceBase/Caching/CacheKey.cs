@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace MoeUC.Core.Caching;
+namespace MoeUC.Service.ServiceBase.Caching;
 
 public class CacheKey
 {

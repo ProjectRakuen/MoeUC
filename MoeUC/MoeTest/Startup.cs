@@ -21,6 +21,7 @@ public class Startup
             .AddJsonFile(@"appsettings.json", false, false)
             .AddEnvironmentVariables()
             .Build();
+        services.AddHttpContextAccessor();
 
         var config = context.Configuration;
         services.AddSingleton(config);

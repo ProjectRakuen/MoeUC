@@ -1,10 +1,9 @@
-
-using MoeUC.Core.Caching;
 using MoeUC.Core.Helpers;
 using MoeUC.Core.Infrastructure.Dependency;
+using MoeUC.Core.Redis;
 using StackExchange.Redis;
 
-namespace MoeUC.Core.Redis;
+namespace MoeUC.Service.ServiceBase.Caching;
 
 public class RedisSetHelper : IScoped
 {

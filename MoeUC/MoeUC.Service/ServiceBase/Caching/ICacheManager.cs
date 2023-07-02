@@ -1,4 +1,4 @@
-﻿namespace MoeUC.Core.Caching;
+﻿namespace MoeUC.Service.ServiceBase.Caching;
 
 public interface ICacheManager
 {
