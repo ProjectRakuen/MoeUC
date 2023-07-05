@@ -13,14 +13,11 @@ public class LoginController : BaseApiController
     private readonly ILogger<LoginController> _logger;
     private readonly AuthHelper _authHelper;
     private readonly MoeUserService _userService;
-    private readonly WorkContext _workContext;
-
-    public LoginController(ILogger<LoginController> logger, AuthHelper authHelper, MoeUserService userService, WorkContext workContext)
+    public LoginController(WorkContext workContext, ILogger<LoginController> logger, AuthHelper authHelper, MoeUserService userService) : base(workContext)
     {
-        this._logger = logger;
+        _logger = logger;
         _authHelper = authHelper;
         _userService = userService;
-        _workContext = workContext;
     }
 
     [HttpPost]
@@ -39,5 +36,5 @@ public class LoginController : BaseApiController
         });
     }
 
-    
+
 }

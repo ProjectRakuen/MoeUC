@@ -14,6 +14,14 @@ public class MoeUser : BaseEntity
     [StringLength(512)]
     public string? PasswordHash { get; set; }
 
-    [StringLength(128)]
-    public string? UserGuid { get; set; }
+    [StringLength(2048)]
+    public string? Description { get; set; }
+
+    [StringLength(1024)]
+    public string? Avatar { get; set; }
+
+    public int GitHubId { get; set; }
+
+    [StringLength(1024)]
+    public string? GitHubHtmlUrl { get; set; }
 }

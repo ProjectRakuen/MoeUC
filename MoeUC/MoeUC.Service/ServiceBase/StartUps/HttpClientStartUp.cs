@@ -1,23 +1,21 @@
 ﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MoeUC.Core.Infrastructure.StartupConfigs;
+using MoeUC.Service.Settings;
 
-namespace MoeUC.Service.ServiceBase.Caching;
+namespace MoeUC.Service.ServiceBase.StartUps;
 
-public class MemoryCacheStartUp : IMoeStartup
+public class HttpClientStartUp : IMoeStartup
 {
     public void ConfigureServices(IServiceCollection services, IConfiguration configuration)
     {
-        services.AddMemoryCache();
-        services.AddSingleton<IMemoryCache, MemoryCache>();
-        services.AddScoped<MemoryCacheManager>();
+        services.AddHttpClient(HttpClientNames.Default);
     }
 
     public void Configure(IApplicationBuilder application)
     {
     }
 
-    public int Order => 0;
+    public int Order => 9999;
 }
