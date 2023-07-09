@@ -1,13 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MoeUC.Api.Models;
+using MoeUC.Core.Infrastructure.Mapping;
 using MoeUC.Service.ServiceBase;
 using MoeUC.Service.ServiceBase.Models;
+using MoeUC.Service.ThirdParties;
 
 namespace MoeUC.Api.Controllers;
 
 public class OauthController : BaseApiController
 {
-    public OauthController(WorkContext workContext) : base(workContext)
+    private readonly GitHubService _gitHubService;
+    public OauthController(WorkContext workContext, GitHubService gitHubService) : base(workContext)
     {
+        _gitHubService = gitHubService;
     }
 
     /// <summary>
@@ -18,6 +23,8 @@ public class OauthController : BaseApiController
     [HttpGet]
     public async Task<CommonJsonResponse> RegisterByGitHub(string code)
     {
-        throw new NotImplementedException();
+        var user = await _gitHubService.InitUserByGitHub(code);
+
+        return _workContext.Successed(user.MapTo<UserRegisterResponseModel>());
     }
 }

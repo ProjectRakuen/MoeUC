@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="Hangfire.AspNetCore" Version="1.7.32" />
     <PackageReference Include="Hangfire.Core" Version="1.7.32" />
     <PackageReference Include="Hangfire.InMemory" Version="0.3.5" />
@@ -18,6 +19,10 @@
   <ItemGroup>
     <ProjectReference Include="..\MoeUC.Core\MoeUC.Core.csproj" />
     <ProjectReference Include="..\MoeUC.Service\MoeUC.Service.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Mappers\" />
   </ItemGroup>
 
 </Project>

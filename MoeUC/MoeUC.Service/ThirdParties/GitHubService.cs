@@ -42,7 +42,11 @@ public class GitHubService : IScoped
 
         var moeUser = new MoeUser()
         {
-            Avatar = gitHubUser.AvatarUrl,
+            Avatar = await _imageHelper.SaveWebImage(gitHubUser.AvatarUrl, new SaveImageOptions()
+            {
+                Height = 400,
+                Width = 400,
+            }),
             Description = gitHubUser.Bio,
             Email = gitHubUser.Email,
             GitHubHtmlUrl = gitHubUser.HtmlUrl,
