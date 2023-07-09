@@ -2,7 +2,7 @@
 
 namespace MoeUC.Core.Infrastructure.Mapping;
 
-public static class MapperHelper
+public class MapperHelper
 {
     public static IMapper Mapper { get; private set; } = null!;
     public static MapperConfiguration MapperConfiguration { get; private set; } = null!;

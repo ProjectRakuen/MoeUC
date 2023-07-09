@@ -37,6 +37,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="CommonTests\Mapper\" />
     <Folder Include="Startups\" />
     <Folder Include="Auth\" />
   </ItemGroup>
