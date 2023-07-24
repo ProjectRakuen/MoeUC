@@ -10,11 +10,9 @@
 			"installUsingApt": true,
 			"version": "latest"
 		},
-		"ghcr.io/devcontainers-contrib/features/redis-homebrew:1": {
+		"ghcr.io/devcontainers/features/sshd:1": {
 			"version": "latest"
-		},"ghcr.io/devcontainers/features/sshd:1": {
-			"version": "latest"
-		}
+		},"ghcr.io/wxw-matt/devcontainer-features/apt:0": {}
 	}
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
