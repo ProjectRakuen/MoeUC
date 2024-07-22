@@ -32,7 +32,7 @@ public class RedisCacheManager : ICacheManager,IScoped
     {
         _workContext.RequestStatistic.CacheRead++;
         var cachedItem = _database.StringGet(key.Key);
-        return cachedItem.HasValue ? default : ConvertHelper.AutoDeserialize<T>(cachedItem!);
+        return cachedItem.HasValue ? ConvertHelper.AutoDeserialize<T>(cachedItem!) : default;
     }
 
     public async Task<T?> GetAsync<T>(CacheKey key, Func<Task<T>> acquire)

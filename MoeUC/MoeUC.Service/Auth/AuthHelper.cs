@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using MoeUC.Core.Infrastructure.Dependency;
+using MoeUC.Service.ServiceBase.Caching;
 
 namespace MoeUC.Service.Auth;
 
@@ -16,6 +17,8 @@ public class AuthHelper : IScoped
     private readonly string _salt;
     private readonly string _postSalt;
 
+    private readonly TimeSpan _authExpireTime = TimeSpan.FromHours(5);
+
 
     public AuthHelper(IConfiguration configuration)
     {
@@ -26,12 +29,12 @@ public class AuthHelper : IScoped
         _postSalt = configuration["Auth:PostSalt"]!;
     }
 
-    public string Create(int userId)
+    public string CreateToken(int userId)
     {
         var claims = new List<Claim>()
-        {
-            new(ClaimTypes.NameIdentifier, userId.ToString())
-        };
+            {
+                new(ClaimTypes.NameIdentifier, userId.ToString())
+            };
 
         var expires = DateTime.Now.AddHours(6);
         var secretKeyBytes = Encoding.UTF8.GetBytes(_secretKey);
@@ -51,7 +54,7 @@ public class AuthHelper : IScoped
     {
         if (string.IsNullOrWhiteSpace(token))
             return 0;
-        
+
         var tokenHandler = new JwtSecurityTokenHandler();
         var validateParams = new TokenValidationParameters();
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_secretKey));
@@ -71,5 +74,10 @@ public class AuthHelper : IScoped
         var bytes = await md5.ComputeHashAsync(stream);
 
         return Convert.ToBase64String(bytes) + _postSalt;
+    }
+
+    private CacheKey GetAuthTokenCacheKey(int userId)
+    {
+        return new CacheKey($"MoeUC:Auth:Token:{userId}", _authExpireTime);
     }
 }

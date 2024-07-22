@@ -38,7 +38,7 @@ public class CacheKey
             keyBuilder.Append(item);
         }
 
-        return new CacheKey(Key, CacheTime);
+        return new CacheKey(keyBuilder.ToString(), CacheTime);
     }
 
     public long AbsoluteExpireTimeStamp => DateTimeOffset.Now.Add(CacheTime).ToUnixTimeMilliseconds();

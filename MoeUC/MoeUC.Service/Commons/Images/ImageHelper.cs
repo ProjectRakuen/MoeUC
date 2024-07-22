@@ -2,6 +2,8 @@
 using Microsoft.Extensions.Logging;
 using MoeUC.Core.Infrastructure.Dependency;
 using MoeUC.Service.Settings;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Processing;
 using Image = SixLabors.ImageSharp.Image;
 
 namespace MoeUC.Service.Commons.Images;

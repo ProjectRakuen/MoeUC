@@ -14,7 +14,7 @@ public class AuthTest : IClassFixture<AuthHelper>
     [Fact]
     public void TestJwt()
     {
-        var token = _authHelper.Create(1);
+        var token = _authHelper.CreateToken(1);
         Assert.NotNull(token);
         var userId = _authHelper.GetUserIdFromToken(token);
         Assert.Equal(1, userId);

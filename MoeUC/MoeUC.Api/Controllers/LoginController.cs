@@ -22,7 +22,7 @@ public class LoginController : BaseApiController
 
     [HttpPost]
     [ProducesDefaultResponseType(typeof(CommonJsonResponse<LoginResponseModel>))]
-    public async Task<CommonJsonResponse> Login(LoginRequestModel requestModel)
+    public async Task<CommonJsonResponse> Login([FromBody] LoginRequestModel requestModel)
     {
         var user = await _userService.Find(c => c.Email == requestModel.Email).FirstOrDefaultAsync();
         if (user == null)
@@ -32,9 +32,21 @@ public class LoginController : BaseApiController
 
         return _workContext.Successed(new LoginResponseModel()
         {
-            Token = _authHelper.Create(user.Id)
+// todo: renew token
+            Token = _userService.GetUserToken(user.Id)
         });
     }
 
+    [HttpPost]
+    [ProducesDefaultResponseType(typeof(LoginResponseModel))]
+    public async Task<CommonJsonResponse> Register([FromBody] RegisterRequestModel requestModel)
+    {
+        var user = await _userService.Register(requestModel.Email, requestModel.Password);
 
+        return _workContext.Successed(new RegisterResponseModel()
+        {
+            Token = _userService.GetUserToken(user.Id)
+
+        });
+    }
 }

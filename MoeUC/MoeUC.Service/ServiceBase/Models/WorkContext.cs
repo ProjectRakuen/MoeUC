@@ -19,11 +19,13 @@ public class WorkContext : IScoped
         get
         {
             var token = _httpContext?.Request?.Headers?[AuthTokenName];
-            if (token.HasValue)
+            var model = new UserInfoModel();
+            if (token.HasValue && !string.IsNullOrWhiteSpace(token))
             {
                 var userId = _authHelper.GetUserIdFromToken(token.Value.FirstOrDefault());
+                model.Id = userId;
             }
-            return new UserInfoModel();
+            return model;
         }
     }
 
